@@ -1,5 +1,5 @@
 package principal;
-
+import static java.lang.Math.*;
 public class Sumador {
 
 	public static void main(String[] args) {
@@ -17,8 +17,8 @@ public class Sumador {
 			menor=n2;
 			mayor=n1;
 		}*/
-		menor=Math.min(n1, n2);
-		mayor=Math.max(n1, n2);
+		menor=min(n1, n2);
+		mayor=max(n1, n2);
 		for(int i=menor+1;i<mayor;i++) {
 			suma+=i;//suma=suma+i;
 		}
