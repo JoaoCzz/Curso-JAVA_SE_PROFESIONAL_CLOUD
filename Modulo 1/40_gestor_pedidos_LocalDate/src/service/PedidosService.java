@@ -1,6 +1,7 @@
 package service;
 
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -42,8 +43,27 @@ public class PedidosService {
 		            }
 		        }
 		        return Rango;
-		    
-		
 		}
+		
+		public Pedidos pedidoProximaFecha(LocalDate fecha) {
+			Pedidos masreciente = null;
+			Pedidos maslejano =null;
+			for(Pedidos pedidos: pedidos) {
+				LocalDate fechaPedido = pedidos.getfPedido();
+				if (fechaPedido != null) {
+		            if (masreciente == null || fechaPedido.isAfter(masreciente.getfPedido())) {
+		                masreciente = pedidos;
+		            }
+		            if (maslejano == null || fechaPedido.isBefore(maslejano.getfPedido())) {
+		                maslejano = pedidos;
+		            }
+		        }
+		    }    
+		    long diasMasReciente = masreciente != null ? Math.abs(ChronoUnit.DAYS.between(fecha, masreciente.getfPedido())) : Long.MAX_VALUE;
+		    long diasMasLejano = maslejano != null ? Math.abs(ChronoUnit.DAYS.between(fecha, maslejano.getfPedido())) : Long.MAX_VALUE;
+		    
+		    return diasMasReciente <= diasMasLejano ? masreciente : maslejano;
 
+			}
 }
+

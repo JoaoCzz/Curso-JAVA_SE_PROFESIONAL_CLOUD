@@ -7,6 +7,7 @@ public class Pedidos {
 	private String producto;
 	private int unidades;
 	private LocalDate fPedido;
+	
 	public String getProducto() {
 		return producto;
 	}

@@ -20,28 +20,40 @@ public class view {
 		int opcion;
 		teclado.nextLine();
 		do{
-			Menu();
-			opcion= teclado.nextInt();
-			switch(opcion) {
-			case 1:
-				newPedido();
-				break;
-			case 2:
-				masreciente();
-				break;
-			case 3:
-				PedidosEntre();
-				break;
-			case 4:
-				System.out.println("Adios!");
-				break;
-			default:
-				System.out.println("Opción no válida!");
-		}
-	
-		}while(opcion!=5);
+		try {
+				Menu();
+				opcion= teclado.nextInt();
+				switch(opcion) {
+				case 1:
+					newPedido();
+					break;
+				case 2:
+					masreciente();
+					break;
+				case 3:
+					PedidosEntre();
+					break;
+				case 4:
+					xd();
+					break;
+				case 5:
+					System.out.println("Adios!");
+				default:
+					System.out.println("Opción no válida!");
+			}
 		
+		}catch(Exception ex) {
+			System.out.println("Introduce un numero kbron");
+			teclado.nextLine();
+			opcion = 0;
+	}
+		}while(opcion!=6);	
+	
 		}
+		
+		
+	
+		
 	static void newPedido() {
 		Pedidos p= new Pedidos();
 		Scanner sc=new Scanner(System.in);
@@ -97,7 +109,24 @@ public class view {
  				+ "1.- Nuevo Pedido: \r\n"
  				+ "2.- Pedido mas reciente: \r\n"
  				+ "3.- Pedidos entre: \r\n"
- 				+ "4.- Salir");	
+ 				+ "4.- El proximo  \r\n "
+ 				+ "5.- Salir");	
  	}
+     static void xd() {
+    	 
+    	 Scanner sc=new Scanner(System.in);
+ 		 String fecha;
+ 		 LocalDate fechaD;
+ 		 System.out.println("Escribe la primera fecha: ");
+		 fecha= sc.nextLine();
+		 fechaD= LocalDate.parse(fecha,DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+ 		Pedidos masReciente =service.pedidoProximaFecha(fechaD);
+    	 if (masReciente != null) {
+             System.out.println("El pedido más reciente es: " + masReciente);
+         } else {
+             System.out.println("No hay pedidos registrados.");
+         }
+     }
+     
 
 }
