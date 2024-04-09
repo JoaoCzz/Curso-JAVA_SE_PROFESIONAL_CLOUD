@@ -14,7 +14,7 @@ public static void main(String[] args) {
 	n2= sc.nextInt();
 	div= n1/n2;
 	System.out.println("La division es:" + div);
-	catch(InputMismatchException ex) {
+	}catch(InputMismatchException ex) {
 	System.out.println("Cabron introduce un numero");	
 	}catch(ArithmeticException ex) {
 		System.out.println("entre 0 no");

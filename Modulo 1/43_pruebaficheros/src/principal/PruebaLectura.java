@@ -10,12 +10,16 @@ public class PruebaLectura {
 		String ruta="dias.txt";
 		try (FileReader fr= new FileReader(ruta);
 				BufferedReader bf= new BufferedReader(fr)){
-			String linea= bf.readLine();
+			/*String linea= bf.readLine();
 					while(linea!=null) {
 						System.out.println(linea);
 						linea= bf.readLine();
 					}
-			
+			*/
+			String linea;
+			while((linea=bf.readLine())!=null){
+				System.out.println(linea);
+			}
 			
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();

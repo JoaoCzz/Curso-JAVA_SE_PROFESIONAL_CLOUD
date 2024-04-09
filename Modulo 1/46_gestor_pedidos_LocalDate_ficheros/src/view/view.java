@@ -12,17 +12,16 @@ import modelo.Pedidos;
 import service.PedidosService;
 
 public class view {
-	
 	static PedidosService service= new PedidosService();
 	
 	public static void main(String[] args) {
 		Scanner teclado= new Scanner(System.in);
 		int opcion;
-		teclado.nextLine();
 		do{
 		try {
 				Menu();
 				opcion= Integer.parseInt(teclado.nextLine());
+				System.out.println("Opción seleccionada: " + opcion);
 				switch(opcion) {
 				case 1:
 					newPedido();

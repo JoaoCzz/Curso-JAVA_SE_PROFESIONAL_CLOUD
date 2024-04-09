@@ -1,0 +1,1 @@
+Pedidos [producto=Coca cola, unidades=1, fPedido=2024-04-08]Pedidos [producto=Oreo, unidades=1, fPedido=2024-04-05]Pedidos [producto=Monster, unidades=1, fPedido=2024-01-01]
