@@ -64,7 +64,7 @@ public class view {
 		System.out.println("Introduce la fecha: ");
 		fecha= sc.nextLine();
 		LocalDate fechaP= LocalDate.parse(fecha,DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-		p.setfPedido(fechaP);
+		p.setFPedido(fechaP);
 		if(service.crearPedido(p)) {
 			System.out.println("Pedido creado");
 		}else {

@@ -41,7 +41,7 @@ public class PedidosService {
 		        String linea = null;
 		        while ((linea = bf.readLine()) != null) {
 		            Pedidos pedido = utilservice.convertirCadenaPedido(linea);
-		            if (masreciente == null || pedido.getfPedido().isAfter(masreciente.getfPedido())) {
+		            if (masreciente == null || pedido.getFPedido().isAfter(masreciente.getFPedido())) {
 		                masreciente = pedido;
 		            }
 		        }
@@ -56,7 +56,7 @@ public class PedidosService {
 		public ArrayList<Pedidos> RangoEntre(LocalDate f1,LocalDate f2){
 			 ArrayList<Pedidos> Rango = new ArrayList<>();
 			 for (Pedidos pedido : pedidos) {
-		            LocalDate fechaPedido = pedido.getfPedido();
+		            LocalDate fechaPedido = pedido.getFPedido();
 		            if (fechaPedido.compareTo(f1) >= 0 && fechaPedido.compareTo(f2) <= 0) {
 		                Rango.add(pedido);
 		            }
@@ -68,18 +68,18 @@ public class PedidosService {
 			Pedidos masreciente = null;
 			Pedidos maslejano =null;
 			for(Pedidos pedidos: pedidos) {
-				LocalDate fechaPedido = pedidos.getfPedido();
+				LocalDate fechaPedido = pedidos.getFPedido();
 				if (fechaPedido != null) {
-		            if (masreciente == null || fechaPedido.isAfter(masreciente.getfPedido())) {
+		            if (masreciente == null || fechaPedido.isAfter(masreciente.getFPedido())) {
 		                masreciente = pedidos;
 		            }
-		            if (maslejano == null || fechaPedido.isBefore(maslejano.getfPedido())) {
+		            if (maslejano == null || fechaPedido.isBefore(maslejano.getFPedido())) {
 		                maslejano = pedidos;
 		            }
 		        }
 		    }    
-		    long diasMasReciente = masreciente != null ? Math.abs(ChronoUnit.DAYS.between(fecha, masreciente.getfPedido())) : Long.MAX_VALUE;
-		    long diasMasLejano = maslejano != null ? Math.abs(ChronoUnit.DAYS.between(fecha, maslejano.getfPedido())) : Long.MAX_VALUE;
+		    long diasMasReciente = masreciente != null ? Math.abs(ChronoUnit.DAYS.between(fecha, masreciente.getFPedido())) : Long.MAX_VALUE;
+		    long diasMasLejano = maslejano != null ? Math.abs(ChronoUnit.DAYS.between(fecha, maslejano.getFPedido())) : Long.MAX_VALUE;
 		    
 		    return diasMasReciente <= diasMasLejano ? masreciente : maslejano;
 

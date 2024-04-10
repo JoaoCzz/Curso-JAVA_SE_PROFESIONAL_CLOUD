@@ -11,7 +11,7 @@ public class util {
 	}
 	
 	public static String unirPedidos(Pedidos pedido) {
-		return pedido.getProducto()+","+pedido.getUnidades()+","+pedido.getfPedido();
+		return pedido.getProducto()+","+pedido.getUnidades()+","+pedido.getFPedido();
 	}
 
 }
