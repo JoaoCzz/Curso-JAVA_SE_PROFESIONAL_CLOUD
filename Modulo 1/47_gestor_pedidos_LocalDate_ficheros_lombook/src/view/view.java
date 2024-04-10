@@ -10,13 +10,14 @@ import java.util.Scanner;
 
 import modelo.Pedidos;
 import service.PedidosService;
-
+import curso.io.LectorTeclado;
 public class view {
 	static PedidosService service= new PedidosService();
 	
 	public static void main(String[] args) {
 		Scanner teclado= new Scanner(System.in);
-		int opcion;
+		LectorTeclado lector= new LectorTeclado();
+		int opcion=0;
 		do{
 		try {
 				Menu();
@@ -46,7 +47,7 @@ public class view {
 			teclado.nextLine();
 			opcion = 0;
 	}
-		}while(opcion!=6);	
+		}while(opcion!=5);	
 	
 		}
 		
