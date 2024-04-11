@@ -14,4 +14,8 @@ private int z;
 	public void setZ(int z) {
 		this.z = z;
 	}
+	@Override
+	public void imprimir() {
+		System.out.println("Las coordenadas sonxddddd: "+getX()+","+getY()+","+getZ());
+	}
 }
