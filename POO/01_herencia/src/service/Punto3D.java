@@ -16,6 +16,8 @@ private int z;
 	}
 	@Override
 	public void imprimir() {
-		System.out.println("Las coordenadas sonxddddd: "+getX()+","+getY()+","+getZ());
+		//System.out.println("Las coordenadas sonxddddd: "+getX()+","+getY()+","+getZ());
+		super.imprimir();
+		System.out.println(","+z );
 	}
 }
