@@ -1,9 +1,8 @@
-package principal;
+
 
 import java.util.List;
 
 import Interfaz.IntefazPro;
-import Interfaz.condicion;
 
 class Positivos implements condicion{
 
@@ -29,8 +28,8 @@ class Pares implements condicion{
 	public boolean test(Integer n) {
 		
 		return n%2==0;
-	}	
-}
+	}
+
 class Impares implements condicion{
 
 	@Override
@@ -40,7 +39,9 @@ class Impares implements condicion{
 	}
 	
 }
-
+	
+}
+}
 
 public class main {
 	public static void main(String[] args) {

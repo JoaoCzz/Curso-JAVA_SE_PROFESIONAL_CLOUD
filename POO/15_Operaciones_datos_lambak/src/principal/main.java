@@ -5,12 +5,12 @@ import java.util.List;
 import Interfaz.IntefazPro;
 import Interfaz.condicion;
 
-class Positivos implements condicion{
+/*class Positivos implements condicion{
 
-	@Override
-	public boolean test(Integer n) {
-		return n>0;
-	}
+	//@Override
+	//public boolean test(Integer n) {
+		//return n>0;
+	//}
 	
 }
 
@@ -29,8 +29,8 @@ class Pares implements condicion{
 	public boolean test(Integer n) {
 		
 		return n%2==0;
-	}	
-}
+	}
+
 class Impares implements condicion{
 
 	@Override
@@ -40,13 +40,16 @@ class Impares implements condicion{
 	}
 	
 }
+	
+}*/
 
 
 public class main {
 	public static void main(String[] args) {
 		List <Integer> numeros= List.of(3,-2,8,5,1,17,22,-9,6,12);
-		System.out.println(IntefazPro.sumaporcondicion(numeros, new Positivos()));
-		System.out.println(IntefazPro.sumaporcondicion(numeros, new Pares()));
+		System.out.println(IntefazPro.sumaporcondicion(numeros, n->n>0));
+		System.out.println(IntefazPro.sumaporcondicion(numeros,n->n%2==0));
+		
 		
 	}
 		
