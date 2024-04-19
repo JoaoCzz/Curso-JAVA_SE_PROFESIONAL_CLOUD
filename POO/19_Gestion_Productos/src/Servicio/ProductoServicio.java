@@ -38,6 +38,10 @@ public void eliminarPorCategoria(String categoria) {
 public List<Productos> obtenerProductos(){
 	return p;
 }
+
+public void PorPrecio(){
+	p.sort((a,b)->Double.compare(a.getPrecio(), b.getPrecio()));
+}
 	
 }
 
