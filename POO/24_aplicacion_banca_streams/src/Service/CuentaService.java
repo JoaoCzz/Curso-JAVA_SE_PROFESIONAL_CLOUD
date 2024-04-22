@@ -2,7 +2,12 @@ package Service;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
 import Modelo.Cuenta;
 
 public class CuentaService {
@@ -28,4 +33,31 @@ public class CuentaService {
 
 		return (int)cuentas.stream().filter(c -> c.getDivisa().equals(divisa)).count();
 	}
+	public int contarCuentasDespuesFecha(LocalDate fecha) {
+		return (int)cuentas.stream().filter(c -> c.getFApertura().isBefore(fecha)).count();
+	}
+	public Cuenta CuentaBuscar (String numero) {
+		return cuentas.stream().filter(c -> c.getNCuenta().equals(numero)).findFirst().orElse(null);
+	}
+	public Optional<Cuenta> CuentaBuscarTitular (String titular) {
+		return cuentas.stream().filter(c -> c.getTitular().equals(titular)).findFirst();
+	}
+	
+	//metodo que deuelva la cuenta con menor saldo
+	
+	public Optional <Cuenta> MenorSaldo() {
+		//return cuentas.stream().sorted((a,b)-> Double.compare(a.getSaldo(), b.getSaldo())).findFirst();
+		//return cuentas.stream().min((a,b)->Double.compare(a.getSaldo(), b.getSaldo()));
+		return cuentas.stream().min(Comparator.comparingDouble(c -> c.getSaldo()));
+		
+	}
+	
+	 public List<Cuenta> listaCuentasPorDivisa (String divisa){
+		return cuentas.stream().filter(c->c.getDivisa().equalsIgnoreCase(divisa)).collect(Collectors.toList());
+	}
+	 
+	public Map<String,Double> cuentasSaldo(){
+		return cuentas.stream().collect(Collectors.toMap(c -> c.getNCuenta(), g-> g.getSaldo()));
+	}
+	 
 }
