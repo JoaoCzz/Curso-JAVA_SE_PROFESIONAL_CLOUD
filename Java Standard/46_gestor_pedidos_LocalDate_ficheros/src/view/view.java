@@ -12,17 +12,16 @@ import modelo.Pedidos;
 import service.PedidosService;
 
 public class view {
-	
 	static PedidosService service= new PedidosService();
 	
 	public static void main(String[] args) {
 		Scanner teclado= new Scanner(System.in);
 		int opcion;
-		teclado.nextLine();
 		do{
 		try {
 				Menu();
 				opcion= Integer.parseInt(teclado.nextLine());
+				System.out.println("Opción seleccionada: " + opcion);
 				switch(opcion) {
 				case 1:
 					newPedido();
@@ -31,14 +30,12 @@ public class view {
 					masreciente();
 					break;
 				case 3:
-//					PedidosEntre();
+					PedidosEntre();
 					break;
 				case 4:
 					xd();
 					break;
 				case 5:
-					CON();
-				case 6:
 					System.out.println("Adios!");
 				default:
 					System.out.println("Opción no válida!");
@@ -49,7 +46,7 @@ public class view {
 			teclado.nextLine();
 			opcion = 0;
 	}
-		}while(opcion!=7);	
+		}while(opcion!=6);	
 	
 		}
 		
@@ -85,26 +82,26 @@ public class view {
      
      
      
-//     
-//     static void PedidosEntre(){
-//    	 Scanner sc=new Scanner(System.in);
-// 		 String fecha; 
-// 		 String fecha2;
-// 		 LocalDate fechaD = null;
-// 		 LocalDate fecha2D= null;
-// 		 System.out.println("Escribe la primera fecha: ");
-// 		 fecha= sc.nextLine();
-// 		 fechaD= LocalDate.parse(fecha,DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-//	System.out.println("Escribe la segunda fecha: ");
-// fecha2= sc.nextLine();
-//		fecha2D= LocalDate.parse(fecha2,DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-//		service.RangoEntre(fechaD, fecha2D);
-//		 System.out.println("Pedidos entre " + fecha + " y " + fecha2 + ": ");
-//		 for (Pedidos pedido : service.RangoEntre(fechaD, fecha2D)) {
-//		     System.out.println(pedido);
-//		 }
-//		 
-//     }
+     
+     static void PedidosEntre(){
+    	 Scanner sc=new Scanner(System.in);
+ 		 String fecha; 
+ 		 String fecha2;
+ 		 LocalDate fechaD = null;
+ 		 LocalDate fecha2D= null;
+ 		 System.out.println("Escribe la primera fecha: ");
+ 		 fecha= sc.nextLine();
+ 		 fechaD= LocalDate.parse(fecha,DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+	System.out.println("Escribe la segunda fecha: ");
+ fecha2= sc.nextLine();
+		fecha2D= LocalDate.parse(fecha2,DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+		service.RangoEntre(fechaD, fecha2D);
+		 System.out.println("Pedidos entre " + fecha + " y " + fecha2 + ": ");
+		 for (Pedidos pedido : service.RangoEntre(fechaD, fecha2D)) {
+		     System.out.println(pedido);
+		 }
+		 
+     }
      
      static void Menu(){
  		System.out.println("Hola Elige una opcion \r\n" 
@@ -112,8 +109,7 @@ public class view {
  				+ "2.- Pedido mas reciente: \r\n"
  				+ "3.- Pedidos entre: \r\n"
  				+ "4.- El proximo  \r\n "
- 				+ "5.- Pedido mas reciente con \r\n"
- 				+ "6.- Salir");	
+ 				+ "5.- Salir");	
  	}
      static void xd() {
     	 
@@ -130,22 +126,6 @@ public class view {
              System.out.println("No hay pedidos registrados.");
          }
      }
-     static void CON(){
-    	 Pedidos masReciente =service.pedidoMasrecienteCON();
-    	 if (masReciente != null) {
-             System.out.println("El pedido más reciente es: " + masReciente);
-         } else {
-             System.out.println("No hay pedidos registrados.");
-         }
-	}
-     static void menorUnidad(){
-    	 Pedidos masReciente =service.pedidoMasreciente();
-    	 if (masReciente != null) {
-             System.out.println("El pedido más reciente es: " + masReciente);
-         } else {
-             System.out.println("No hay pedidos registrados.");
-         }
-	}
      
 
 }

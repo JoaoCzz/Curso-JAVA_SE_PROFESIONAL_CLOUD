@@ -7,6 +7,8 @@ import java.util.Calendar;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import modelo.Pedidos;
 
@@ -32,24 +34,32 @@ public class PedidosService {
 //		}
 		
 		public Pedidos pedidoProximaFecha(LocalDate fecha) {
-			Pedidos masreciente = null;
-			Pedidos maslejano =null;
-			for(Pedidos pedidos: pedidos) {
-				LocalDate fechaPedido = pedidos.getfPedido();
-				if (fechaPedido != null) {
-		            if (masreciente == null || fechaPedido.isAfter(masreciente.getfPedido())) {
-		                masreciente = pedidos;
-		            }
-		            if (maslejano == null || fechaPedido.isBefore(maslejano.getfPedido())) {
-		                maslejano = pedidos;
-		            }
-		        }
-		    }    
-		    long diasMasReciente = masreciente != null ? Math.abs(ChronoUnit.DAYS.between(fecha, masreciente.getfPedido())) : Long.MAX_VALUE;
-		    long diasMasLejano = maslejano != null ? Math.abs(ChronoUnit.DAYS.between(fecha, maslejano.getfPedido())) : Long.MAX_VALUE;
-		    
-		    return diasMasReciente <= diasMasLejano ? masreciente : maslejano;
-
+		return pedidos.stream().filter(pedido -> pedido.getfPedido().isBefore(fecha)||pedido.getfPedido().isAfter(fecha)||pedido.getfPedido().equals(fecha))
+				.min(Comparator.comparing(pedido -> Math.abs(ChronoUnit.DAYS.between(pedido.getfPedido(), fecha)))).orElse(null);	
+			
+//		
 			}
+		
+		public Pedidos pedidoMasrecienteCON() {
+			
+			return  pedidos.stream().filter(pedido -> pedido.getfPedido().isBefore(LocalDate.now()))
+	                .min(Comparator.comparing(Pedidos::getfPedido).thenComparing(p -> p.getUnidades()).reversed())
+	                .orElse(null);
+	                
+			}
+		
+		public List<Pedidos> pedidosdelProducto(String nombre){
+			return  pedidos.stream().filter(p -> p.getProducto().equals(nombre)).collect(Collectors.toList());
+		}
+		
+		public Pedidos pedidoconmenorUnidades() {
+			return pedidos.stream().min(Comparator.comparingInt(Pedidos::getUnidades)).orElse(null);
+		}
+		//devuelve una cadena con los nombres de todos los productos, sin duplicados, separados por "-"
+		
+		public String nombreProductos() {
+			return pedidos.stream().map(p -> p.getProducto()).distinct().collect(Collectors.joining("-"));
+		}
+			
 }
 
