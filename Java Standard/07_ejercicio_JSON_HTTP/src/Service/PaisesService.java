@@ -2,6 +2,13 @@ package Service;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.IOException;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.net.http.HttpResponse.BodyHandler;
+import java.net.http.HttpResponse.BodyHandlers;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
@@ -18,16 +25,26 @@ import Modelo.Pais;
 
 
 public class PaisesService {
-	String dir="C:\\Users\\manana\\Downloads\\paises.json";		
+		
 	private Stream <Pais> getPaises(){
-		try {
+		
 			Gson gson= new Gson();
-			return Arrays.stream(gson.fromJson(new FileReader(dir), Pais[].class));
-		}catch (JsonSyntaxException | JsonIOException | FileNotFoundException e){
-			e.printStackTrace();
-			return Stream.empty();
-		}
+			String url="https://restcountries.com/v2/all";
+			HttpRequest request= HttpRequest.newBuilder().uri(URI.create(url)).GET().build();
+			HttpClient client= HttpClient.newBuilder().build();
+			HttpResponse<String> respuesta;
+			try {
+				respuesta = client.send(request, BodyHandlers.ofString());
+				return Arrays.stream(gson.fromJson(respuesta.body(),Pais[].class)) ;
+			} catch (IOException | InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return Stream.empty();
+			}
+			
+			
 	}
+	
 	
 	public List<String> listaContientes(){
 		return getPaises().map(c -> c.getContinente()).distinct().toList();
@@ -44,7 +61,7 @@ public class PaisesService {
 		
 	}
 	public String paisporCapital(String capital) {
-		return getPaises().filter(c ->c.getCapital()!=null&&c.getCapital().equals(capital)).findFirst().map(c -> c.getNombre()).toString();
+		return getPaises().filter(c -> c.getCapital().equals(capital)).findFirst().map(c -> c.getNombre()).toString();
 	}
 	
 	
