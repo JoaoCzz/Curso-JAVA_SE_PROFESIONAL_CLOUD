@@ -26,13 +26,13 @@ public class elTiempoService {
 			respuesta = client.send(request, BodyHandlers.ofString());
 			return Arrays.stream(gson.fromJson(respuesta.body(),Municipio[].class)) ;
 		} catch (IOException | InterruptedException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 			return Stream.empty();
 		}
 	}
 	
 	
-public 	
+
 		
 }
