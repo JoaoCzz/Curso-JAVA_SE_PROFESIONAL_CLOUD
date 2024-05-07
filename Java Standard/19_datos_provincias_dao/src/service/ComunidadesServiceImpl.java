@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
+import DAO.ComunidadesDAO;
 import model.Comunidad;
 import model.Municipio;
 import model.Provincia;
@@ -16,30 +17,66 @@ public class ComunidadesServiceImpl implements ComunidadesService {
 	String usuario="root";
 	String password="root";
 	
+	ComunidadesDAO comunidadesDAO;
+	
 	@Override
-	public void saveComunidades(List<Comunidad> comunidades) {
+	public int saveComunidades(List<Comunidad> comunidades) {
 		try (Connection con=DriverManager.getConnection(cadenaConexion,usuario,password);){
 			String sql="insert into comunidades(codigo,nombre) values(?,?)";
-			PreparedStatement ps=con.prepareStatement(sql);
-			con.setAutoCommit(false);//cancelamos autocommit
-			for(Comunidad c:comunidades){
-				ps.setString(1, c.getCodigo());
-				ps.setString(2, c.getNombre());
-				ps.execute();
+			int count=0;
+			for(Comunidad c: comunidades) {
+				boolean existe= comunidadesDAO.existComunidad(c.getCodigo());
+				if(!existe) {
+					PreparedStatement ps=con.prepareStatement(sql);
+					con.setAutoCommit(false);
+					ps.setString(1, c.getCodigo());
+					ps.setString(2, c.getNombre());
+					count++;
+					ps.execute();
+					return count;
+				}
+				
 			}
 			con.commit();
-		}
+			}
 		catch(SQLException ex) {
 			ex.printStackTrace();
 		}
-	}
+		return 0;
+		}
+		
 	public void saveComunidad(Comunidad comunidad) {
-		//pendiente
+		try (Connection con = DriverManager.getConnection(cadenaConexion, usuario, password)) {
+	        String sql = "INSERT INTO comunidades(codigo, nombre) VALUES (?, ?)";
+	        PreparedStatement ps = con.prepareStatement(sql);
+	        ps.setString(1, comunidad.getCodigo());
+	        ps.setString(2, comunidad.getNombre());
+	        ps.executeUpdate();
+	    } catch (SQLException ex) {
+	        ex.printStackTrace();
+	    }
 	}
 	public boolean existeComunidad(int codigo) {
-		//pendiente
+		try (Connection con = DriverManager.getConnection(cadenaConexion, usuario, password)) {
+	        String sql = "Select case when count(*) >0 then true else false end from comunidades where codigo= ?";
+	        try (PreparedStatement ps = con.prepareStatement(sql)) {
+	            ps.setInt(1, codigo); 
+	            try (ResultSet rs = ps.executeQuery()) {
+	                if (rs.next()) {
+	                    return rs.getBoolean(1); 
+	                }
+	            }
+	        } catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+            } catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 		return false;
-	}
+        }
+	
 	public void borrarComunidades() {
 		try (Connection con=DriverManager.getConnection(cadenaConexion,usuario,password);){
 			String sql="delete from comunidades";
