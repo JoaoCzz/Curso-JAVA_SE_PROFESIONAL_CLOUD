@@ -17,7 +17,6 @@ public class ComunidadesDAOimpl implements ComunidadesDAO {
 	@Override
 	public void save(Comunidad comunidad) {
 		
-		
 	}
 
 	@Override
@@ -39,6 +38,7 @@ public class ComunidadesDAOimpl implements ComunidadesDAO {
 		}	
 		
 	}
+	
 
 	@Override
 	public boolean existComunidad(String codigo) {
