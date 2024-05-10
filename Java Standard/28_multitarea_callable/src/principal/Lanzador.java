@@ -52,8 +52,8 @@ public class Lanzador {
 		while(!f1.isDone() || !f2.isDone()) {
 			System.out.println("Espera pto"); 
 		}
-		System.out.println("La suma de los numeros: " f1.get());
-		System.out.println("El factorial de 6: "f2.get());
+		System.out.println("La suma de los numeros: " + f1.get());
+		System.out.println("El factorial de 6: "+ f2.get());
 		executor.shutdown();
 
 

@@ -1,5 +1,6 @@
 package principal;
 
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -16,8 +17,8 @@ public class Lanzador {
 		// estara haciendo otras cosas
 		ExecutorService executor= Executors.newCachedThreadPool();
 		//tarea suma
-		Future<Integer> f1=
-		executor.submit(() ->{
+		CompletableFuture<Integer> f1=
+		CompletableFuture.supplyAsync(() ->{
 			int suma=0;
 			for(int i=1;i<=100;i++) {
 				suma+=i;
@@ -33,8 +34,8 @@ public class Lanzador {
 		
 		
 		//Tarea Factorial
-		Future<Integer> f2=
-				executor.submit(()-> {
+		CompletableFuture<Integer> f2=
+				CompletableFuture.supplyAsync(()-> {
 					int p=1;
 					for(int i=1;i<=6;i++) {
 						p*=i;
@@ -46,15 +47,20 @@ public class Lanzador {
 					}
 					return p;
 				});
+		f1.whenComplete((r,e) -> 	
+		System.out.println("La suma de los numeros: "+ r));
+		f2.whenComplete((r,e) -> 
+		System.out.println("El factorial de 6: " + r)); 
+		for(int i=1;i<=100;i++) {
+			System.out.println("espera pto");
+			Thread.sleep(50);
+		}
+		
 		//el main sigue haciendo algo hasta que las tareas terminen,
 		//momento en el que se mostraran el resultado
 		
-		while(!f1.isDone() || !f2.isDone()) {
-			System.out.println("Espera pto"); 
-		}
-		System.out.println("La suma de los numeros: " f1.get());
-		System.out.println("El factorial de 6: "f2.get());
-		executor.shutdown();
+	
+		
 
 
 	}
