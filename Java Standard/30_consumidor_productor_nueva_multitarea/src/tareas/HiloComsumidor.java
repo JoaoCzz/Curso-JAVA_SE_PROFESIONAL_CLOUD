@@ -31,7 +31,7 @@ public HiloComsumidor(recurso recurso, Lock lock, Condition condicionLleno, Cond
 			condicionLleno.signal();
 		lock.unlock();
 			try {
-				Thread.sleep(100);
+				Thread.sleep(80);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

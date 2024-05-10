@@ -1,10 +1,17 @@
 package recursos;
 
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+
 public class contador {
 	private int valor;
+	private Lock lock;
+	public contador() {
+		lock= new ReentrantLock();
+	}
 	
-	public synchronized void incrementar() {
-		
+	public  void incrementar() {
+		lock.lock();
 		int temp=valor;
 		temp= temp+1;
 	try {
@@ -13,6 +20,7 @@ public class contador {
 		e.printStackTrace();
 	}
 	valor= temp;
+	lock.unlock();
 		}
 	
 
