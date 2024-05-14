@@ -2,22 +2,26 @@ package Graficos;
 
 import java.awt.Color;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 public class Ventana extends JFrame{
 	public Ventana() {
 		super("JCalculadora");
-		this.setBounds(100, 100, 700, 300);
+		this.setBounds(100, 80, 800, 400);
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		InitComponets();
 		this.setVisible(true);
 	}
 	
 	public void InitComponets() {
+		this.setLayout(null);
 		JLabel jl1 = new JLabel("Numero 1");
         JLabel jl2 = new JLabel("Numero 2");
         JLabel jlResultado = new JLabel("");
@@ -57,6 +61,39 @@ public class Ventana extends JFrame{
                 	jlResultado.setText("Es: "+resultado);
                 });
                 		jbMultiplicar.addActionListener(a2);
-        		
+	
+                		
+                		
+                		
+                		FocusListener listener1= new FocusListener(){
+
+							@Override
+							public void focusGained(FocusEvent e) {
+								// TODO Auto-generated method stub
+								
+							}
+
+							@Override
+							public void focusLost(FocusEvent e) {
+								//cuando la caja pierda el foco,comprueba si el valor introducido es no numerico
+								//cuyo caso, debe mantener el foco en la caja
+								JTextField jtf=(JTextField)e.getSource();//Obtiene una referencia a la caja
+																		// en la que se ha producido el evento	
+								if(jtf.getText().isEmpty()) {
+									jtf.setText("0");
+								}
+								try {
+									Integer.parseInt(jtf.getText());
+								}catch(NumberFormatException ex) {
+									JOptionPane.showMessageDialog(Ventana.this, "Debe escribir un numero!");
+									jtf.requestFocus(); // Para que mantenga el foco en la caja
+									jtf.selectAll(); //Selecciona el texto introducido
+								}
+								
+							}  		
+	
+};
+jtf1.addFocusListener(listener1);
+jtf2.addFocusListener(listener1);
 	}
 }
