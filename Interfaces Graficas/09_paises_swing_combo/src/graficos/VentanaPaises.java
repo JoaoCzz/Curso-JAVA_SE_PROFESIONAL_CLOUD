@@ -1,7 +1,10 @@
 package graficos;
 
 import java.awt.EventQueue;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -10,7 +13,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
 
-import adaptadores.ListModelContinentesImpl;
+import adaptadores.ComboBoxModelContinentesimpl;
 import service.PaisesServiceFactory;
 
 import javax.swing.ListSelectionModel;
@@ -54,21 +57,17 @@ public class VentanaPaises extends JFrame {
 		lblNewLabel.setBounds(30, 27, 81, 14);
 		contentPane.add(lblNewLabel);
 		
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(109, 27, 88, 87);
-		contentPane.add(scrollPane);
-		
-		JList<String> listContinentes = new JList<>();
-		listContinentes.addListSelectionListener(new ListSelectionListener() {
-			public void valueChanged(ListSelectionEvent e) {
-				String seleccionado=listContinentes.getSelectedValue();
+		JComboBox<String> comboContinentes = new JComboBox();
+		comboContinentes.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent e) {
+				String seleccionado=(String)comboContinentes.getSelectedItem();
 				var service=PaisesServiceFactory.getPaisesService();
 				JOptionPane.showMessageDialog(VentanaPaises.this, "Paises de "+seleccionado+" :"+service.getPaisesFiltradosPor(seleccionado).size());
+						
 			}
 		});
-		listContinentes.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		scrollPane.setViewportView(listContinentes);
-		//asociamos adaptador a la lista
-		listContinentes.setModel(new ListModelContinentesImpl());
+		comboContinentes.setBounds(111, 23, 130, 22);
+		contentPane.add(comboContinentes);
+		comboContinentes.setModel(new ComboBoxModelContinentesimpl());
 	}
 }
