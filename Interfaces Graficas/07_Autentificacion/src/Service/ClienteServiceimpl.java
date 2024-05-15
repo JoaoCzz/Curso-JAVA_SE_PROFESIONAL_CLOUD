@@ -20,28 +20,30 @@ public class ClienteServiceimpl implements ClientesService {
 	@Override
 	public boolean coinciden(String usuario, String password) {
 		Clientes cliente= dao.findCliente(usuario);
-		return cliente != null && cliente.getUsuario().equals(usuario) && cliente.getPassword().equals(password);
+		 return cliente != null && usuario.equals(cliente.getUsuario()) && password.equals(cliente.getPassword());
 	}
 
 	@Override
 	public boolean registrar(Clientes cliente) {
 		try (Connection con= LocatorConnection.getConnection()){
-			 if (dao.findCliente(cliente.getUsuario())==null) {
-				 String sql = "INSERT INTO clientes(usuario, contraseña,email,telefono) VALUES (?, ?,?,?)";
+			 if (dao.findCliente(cliente.getUsuario()).equals(null)) {
+				 String sql = "INSERT INTO clientes(usuario,password,email,telefono) VALUES (?,?,?,?)";
 			        PreparedStatement ps = con.prepareStatement(sql);
 			        ps.setString(1, cliente.getUsuario());
 			        ps.setString(2, cliente.getPassword());
 			        ps.setString(3, cliente.getEmail());
-			        ps.setString(4, cliente.getEmail());
-			        ps.executeUpdate();
-			        return true;
+			        ps.setInt(4, cliente.getTelefono());
+			        ps.execute();
+			        return true;   
 			}
 	       
 		 } catch (SQLException ex) {
 		        ex.printStackTrace();
+		         System.out.println(ex.getMessage()); 
 		    }
 		return false;
 		
 	}
+	
 
 }
