@@ -16,6 +16,7 @@ import service.PaisesServiceFactory;
 
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.table.TableModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.JComboBox;
 import java.awt.event.ItemListener;
@@ -49,42 +50,41 @@ public class VentanaPaises extends JFrame {
 	 */
 	public VentanaPaises() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		
-		setContentPane(contentPane);
-		contentPane.setLayout(null);
-		
-		JLabel lblNewLabel = new JLabel("Continentes:");
-		lblNewLabel.setBounds(30, 27, 81, 14);
-		contentPane.add(lblNewLabel);
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(42, 114, 319, 120);
-		contentPane.add(scrollPane);
-		
-		table = new JTable();
-		scrollPane.setViewportView(table);
-		JComboBox<String> comboContinentes = new JComboBox<>();
-		comboContinentes.addItemListener(new ItemListener() {
-			public void itemStateChanged(ItemEvent e) {
-				if (e.getStateChange() == ItemEvent.SELECTED) {
-					String seleccionado=(String)comboContinentes.getSelectedItem();
-					//creamos adaptador con los datos de los paises
-					//y lo volcamos en JTable
-					var adaptador=new TableModelPaisesImpl(seleccionado);
-					table.setModel(adaptador);
-				}		
-			}
-		});
-		comboContinentes.setBounds(111, 23, 130, 22);
-		contentPane.add(comboContinentes);
-		comboContinentes.setModel(new ComboBoxModelContinentesImpl());
-		
-		JLabel lblNewLabel_1 = new JLabel("Paises:");
-		lblNewLabel_1.setBounds(65, 89, 46, 14);
-		contentPane.add(lblNewLabel_1);
-		
-		
-	}
+        setBounds(100, 100, 450, 300);
+        contentPane = new JPanel();
+        contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+
+        setContentPane(contentPane);
+        contentPane.setLayout(null);
+
+        JLabel lblNewLabel = new JLabel("Continentes:");
+        lblNewLabel.setBounds(30, 27, 81, 14);
+        contentPane.add(lblNewLabel);
+
+        JScrollPane scrollPane = new JScrollPane();
+        scrollPane.setBounds(42, 114, 319, 120);
+        contentPane.add(scrollPane);
+
+        table = new JTable();
+        scrollPane.setViewportView(table);
+
+        JComboBox<String> comboContinentes = new JComboBox<>();
+        comboContinentes.addItemListener(new ItemListener() {
+            public void itemStateChanged(ItemEvent e) {
+                if (e.getStateChange() == ItemEvent.SELECTED) {
+                    String seleccionado = (String) comboContinentes.getSelectedItem();
+                    // Código para actualizar el modelo de la tabla basado en el continente seleccionado
+                    TableModel adaptador = new TableModelPaisesImpl(seleccionado);
+                    table.setModel(adaptador);
+                }
+            }
+        });
+        comboContinentes.setBounds(111, 23, 130, 22);
+        contentPane.add(comboContinentes);
+        comboContinentes.setModel(new ComboBoxModelContinentesImpl());
+
+        JLabel lblNewLabel_1 = new JLabel("Paises:");
+        lblNewLabel_1.setBounds(65, 89, 46, 14);
+        contentPane.add(lblNewLabel_1);
+    }
 }
